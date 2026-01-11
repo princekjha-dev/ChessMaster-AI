@@ -1,4 +1,6 @@
-# Professional Chess Game
+# ♟️ ChessMaster AI - Professional Chess Game
+
+A beautiful, fully-featured chess game with AI opponent, built with vanilla JavaScript. Features a clean, modern interface with light/dark themes, move analysis, and computer# Professional Chess Game
 
 A beautiful, fully-featured chess game with AI opponent, built with vanilla JavaScript. Features a clean, modern interface with light/dark themes, move analysis, and computer vs computer mode.
 
@@ -46,8 +48,8 @@ No build tools or dependencies required! This is a pure HTML/CSS/JavaScript appl
 
 1. **Clone the repository:**
 ```bash
-git clone https://github.com/yourusername/chess-game.git
-cd chess-game
+git clone https://github.com/princekjha-dev/ChessMaster-AI
+cd chessmaster-ai
 ```
 
 2. **Open in browser:**
@@ -68,7 +70,7 @@ php -S localhost:8000
 
 ### Project Structure
 ```
-chess-game/
+chessmaster-ai/
 ├── index.html          # Main HTML file
 ├── css/
 │   └── main.css       # All styles and theme definitions
