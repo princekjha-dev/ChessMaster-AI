@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess - Professional Edition</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js" 
+            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" 
+            crossorigin="anonymous"></script>
+    
+    <!-- Chessboard JS -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css"
+          integrity="sha384-q94+BZtLrkL1/ohfjR8c6L+A6qzNH9R2hBLwyoAfu3i/WCvQjzL2RQJ3uNHDISdU"
+          crossorigin="anonymous">
+    <script defer src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"
+            integrity="sha384-8Vi8VHwn3vjQ9eUHUxex3JSN/NFqUg3QbPyX8kWyb93+8AC/pPWTzj+nHtbC5bxD"
+            crossorigin="anonymous"></script>
+    
+    <!-- Chess JS -->
+    <script defer src="js/chess.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Custom JS -->
+    <script defer src="js/main.js"></script>
+</head>
+<body class="theme-light">
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path class="sun" d="M10 3V1M10 19V17M17 10H19M1 10H3M15.66 15.66L17.07 17.07M2.93 2.93L4.34 4.34M15.66 4.34L17.07 2.93M2.93 17.07L4.34 15.66" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle class="sun" cx="10" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+        </svg>
+    </button>
+
+    <div class="app-container">
+        <!-- Left Panel: Move History & Analysis -->
+        <aside class="left-panel">
+            <div class="panel-section">
+                <div class="section-header">
+                    <h3 class="section-title">Moves</h3>
+                    <button class="icon-btn" id="clearMovesBtn" aria-label="Clear moves">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M2 4H14M5.33 4V2.67C5.33 2.3 5.63 2 6 2H10C10.37 2 10.67 2.3 10.67 2.67V4M12.67 4V13.33C12.67 13.7 12.37 14 12 14H4C3.63 14 3.33 13.7 3.33 13.33V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="move-list" id="moveList">
+                    <div class="move-list-empty">No moves yet</div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-header">
+                    <h3 class="section-title">Captured</h3>
+                </div>
+                <div class="captured-pieces">
+                    <div class="captured-group">
+                        <span class="captured-label">White</span>
+                        <div class="captured-items" id="capturedWhite"></div>
+                    </div>
+                    <div class="captured-group">
+                        <span class="captured-label">Black</span>
+                        <div class="captured-items" id="capturedBlack"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center: Chessboard -->
+        <main class="board-container">
+            <div class="player-info player-black">
+                <div class="player-name">Computer</div>
+                <div class="player-timer" id="timerBlack">
+                    <span class="time">5:00</span>
+                </div>
+            </div>
+
+            <div id="chessboard" class="chess-board"></div>
+
+            <div class="player-info player-white">
+                <div class="player-name">You</div>
+                <div class="player-timer" id="timerWhite">
+                    <span class="time">5:00</span>
+                </div>
+            </div>
+
+            <!-- Game Controls -->
+            <div class="game-controls">
+                <button class="control-btn" id="undoBtn" title="Undo move (Ctrl+Z)">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M3 9H15M3 9L7 5M3 9L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <button class="control-btn" id="redoBtn" title="Redo move (Ctrl+Y)">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M15 9H3M15 9L11 5M15 9L11 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <button class="control-btn" id="flipBtn" title="Flip board">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M9 3V15M9 3L5 7M9 3L13 7M9 15L5 11M9 15L13 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <button class="control-btn primary" id="newGameBtn">
+                    New Game
+                </button>
+            </div>
+        </main>
+
+        <!-- Right Panel: Analysis & Settings -->
+        <aside class="right-panel">
+            <div class="panel-section">
+                <div class="section-header">
+                    <h3 class="section-title">Evaluation</h3>
+                    <button class="icon-btn" id="toggleEvalBtn" aria-label="Toggle evaluation">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 4V12M4 8H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="evaluation-bar">
+                    <div class="eval-track">
+                        <div class="eval-fill" id="evalFill" style="height: 50%"></div>
+                    </div>
+                    <div class="eval-score" id="evalScore">+0.0</div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-header">
+                    <h3 class="section-title">Engine</h3>
+                </div>
+                <div class="engine-info">
+                    <div class="info-row">
+                        <span class="info-label">Depth</span>
+                        <select id="searchDepth" class="depth-select">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3" selected>3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Positions</span>
+                        <span class="info-value" id="positionCount">0</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Time</span>
+                        <span class="info-value" id="calcTime">0.0s</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Nodes/s</span>
+                        <span class="info-value" id="nodesPerSec">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <div class="section-header">
+                    <h3 class="section-title">Options</h3>
+                </div>
+                <div class="option-list">
+                    <label class="option-item">
+                        <input type="checkbox" id="showHint" class="option-checkbox">
+                        <span class="option-label">Show hints</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox" id="highlightMoves" class="option-checkbox" checked>
+                        <span class="option-label">Highlight moves</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox" id="autoQueen" class="option-checkbox" checked>
+                        <span class="option-label">Auto-queen</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <button class="game-mode-btn" id="compVsCompBtn">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M6 9L9 12L18 3M15 9V15C15 15.55 14.55 16 14 16H2C1.45 16 1 15.55 1 15V3C1 2.45 1.45 2 2 2H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Computer vs Computer
+                </button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Status Toast -->
+    <div class="status-toast" id="statusToast">
+        <span class="status-text"></span>
+    </div>
+</body>
+</html>
